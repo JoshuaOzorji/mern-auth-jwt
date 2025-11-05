@@ -26,6 +26,9 @@ app.get("/", (req, res, next) => {
 	});
 });
 
+//auth routes
+app.use("/auth", authRoutes);
+
 app.use(errorHandler);
 
 app.listen(PORT, async () => {
