@@ -7,12 +7,13 @@ export interface UserDocument extends mongoose.Document {
 	verified: boolean;
 	createdAt: Date;
 	updatedAt: Date;
+	__v?: number;
 	comparePassword(val: string): Promise<boolean>;
 
-	// omitPassword(): Pick<
-	//   UserDocument,
-	//   "_id" | "email" | "verified" | "createdAt" | "updatedAt" | "__v"
-	// >;
+	omitPassword(): Pick<
+		UserDocument,
+		"_id" | "email" | "verified" | "createdAt" | "updatedAt" | "__v"
+	>;
 }
 
 const userSchema = new mongoose.Schema<UserDocument>(
