@@ -5,7 +5,6 @@ import {
 	NOT_FOUND,
 	TOO_MANY_REQUESTS,
 	UNAUTHORIZED,
-	UNPROCESSABLE_CONTENT,
 } from "../constants/http";
 import VerificationCodeType from "../constants/verificationCodeType";
 import SessionModel, { SessionDocument } from "../models/session.model";
@@ -37,6 +36,7 @@ type CreateAccountParams = {
 	password: string;
 	userAgent?: string;
 };
+
 export const createAccount = async (data: CreateAccountParams) => {
 	// verify email is not taken
 	const existingUser = await UserModel.exists({
@@ -48,6 +48,7 @@ export const createAccount = async (data: CreateAccountParams) => {
 		email: data.email,
 		password: data.password,
 	});
+
 	const userId = user._id;
 	const verificationCode = await VerificationCodeModel.create({
 		userId,
@@ -55,6 +56,7 @@ export const createAccount = async (data: CreateAccountParams) => {
 		expiresAt: oneYearFromNow(),
 	});
 
+	// generate verification url
 	const url = `${APP_ORIGIN}/email/verify/${verificationCode._id}`;
 
 	// send verification email
