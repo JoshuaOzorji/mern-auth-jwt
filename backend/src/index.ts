@@ -25,7 +25,7 @@ app.use(cookieParser());
 
 app.get("/", (req, res, next) => {
 	return res.status(OK).json({
-		status: "healthy",
+		status: "healthy!!",
 	});
 });
 
